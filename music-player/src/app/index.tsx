@@ -1,21 +1,48 @@
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, FlatList } from "react-native";
 import * as MediaLibrary from "expo-media-library";
-import GlassContainer from "./GlassContainer";
+import { useEffect, useState } from "react";
 export default function Index() {
+  // const [audioFiles, setAudioFiles] = useState([]);
+  // async function getDeviceAudio() {
+  //   const { status } = await MediaLibrary.requestPermissionsAsync();
+
+  //   if (status !== "granted") return [];
+
+  //   const result = await MediaLibrary.getAssetsAsync({
+  //     mediaType: "audio",
+  //     first: 1000,
+  //   });
+  //   const songs = result.assets.map((asset) => ({
+  //     id: asset.id,
+  //     title: asset.filename.replace(/\.[^/.]+$/, ""),
+  //     artist: "Unknown Artist",
+  //     uri: asset.uri,
+  //     duration: asset.duration,
+  //   }));
+  //   return songs;
+  // }
+  // useEffect(() => {
+  //   getDeviceAudio().then((files) => setAudioFiles(files));
+  // }, []);
+  const audioFiles = [
+    { id: "1", title: "Song 1" },
+    { id: "2", title: "Song 2" },
+    { id: "3", title: "Song 3" },
+    { id: "4", title: "Song 4" },
+  ];
   return (
     <View style={styles.screen}>
       <View style={styles.content}>
         <View style={styles.column}>
-          <GlassContainer
-            baseRounded="rounded-[2rem]"
-            contentClassName="p-4 gap-3 sm:gap-5 flex-wrap justify-center"
-            glassOpacity={0.25}
-            isDarkMode={true}
-          >
-            <View style={styles.songContainer}>
-              <Text style={styles.songTitle}>Text</Text>
-            </View>
-          </GlassContainer>
+          <FlatList
+            data={audioFiles}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <View style={styles.songContainer}>
+                <Text style={styles.songTitle}>{item.title}</Text>
+              </View>
+            )}
+          />
         </View>
       </View>
     </View>
