@@ -1,7 +1,8 @@
 import { Text, View, StyleSheet, FlatList } from "react-native";
 import * as MediaLibrary from "expo-media-library";
 import { useEffect, useState } from "react";
-import LavaBackground from "./LavaBackground";
+import GradientBackground from "./GradientBackground";
+import GlowingButton from "./GlowingButton";
 import { COLORS } from "../Constants/theme";
 export default function Index() {
   // const [audioFiles, setAudioFiles] = useState([]);
@@ -34,24 +35,22 @@ export default function Index() {
   ];
   return (
     <>
-      <View style={styles.screenBackground}>
-        <LavaBackground />
-      </View>
-
       <View style={styles.screen}>
-        <View style={styles.content}>
-          <View style={styles.column}>
-            <FlatList
-              data={audioFiles}
-              keyExtractor={(item) => item.id}
-              renderItem={({ item }) => (
-                <View style={styles.songContainer}>
-                  <Text style={styles.songTitle}>{item.title}</Text>
-                </View>
-              )}
-            />
+        <GradientBackground>
+          <View style={styles.content}>
+            <View style={styles.column}>
+              <FlatList
+                data={audioFiles}
+                keyExtractor={(item) => item.id}
+                renderItem={({ item }) => (
+                  <View style={styles.songContainer}>
+                    <GlowingButton title={item.title} />
+                  </View>
+                )}
+              />
+            </View>
           </View>
-        </View>
+        </GradientBackground>
       </View>
     </>
   );
@@ -68,26 +67,26 @@ const styles = StyleSheet.create({
   },
   screen: {
     display: "flex",
+    backgroundColor: "#121212",
+    position: "relative",
+    overflow: "hidden",
     flex: 1,
-    zIndex: 1,
   },
   content: {
+    flex: 1,
     padding: 50,
+    zIndex: 1,
   },
   column: {
     display: "flex",
     flexDirection: "column",
   },
   songContainer: {
-    backgroundColor: "rgba(245, 17, 89, 0.1)",
-
     width: "100%",
-    paddingHorizontal: 20,
+    paddingHorizontal: 30,
     paddingVertical: 15,
-    marginBottom: 10,
+
     borderRadius: 15,
-    borderColor: COLORS.primary,
-    borderWidth: 1,
   },
   songTitle: {
     color: "#fff",
