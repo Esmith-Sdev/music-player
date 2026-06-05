@@ -2,20 +2,16 @@ import { Text, Pressable, StyleSheet } from "react-native";
 import AnimatedGlow from "react-native-animated-glow";
 
 const neonGreenPreset = {
-  cornerRadius: 50,
+  cornerRadius: 5,
   outlineWidth: 4,
-  borderColor: [
-    "rgb(178, 85, 255)",
-    "rgba(245, 17, 89, 1)",
-    "rgb(178, 85, 255)",
-  ],
+  borderColor: ["rgb(255, 82, 82)", "rgb(245, 17, 17)", "rgb(255, 82, 82)"],
   backgroundColor: "#222",
   animationSpeed: 2,
   borderSpeedMultiplier: 1,
   glowLayers: [
     {
       glowPlacement: "behind",
-      colors: ["#f51159", "#ae00ff", "#f51159"],
+      colors: ["#ff5252", "#ff0000", "rgb(255, 82, 82)"],
       glowSize: [10, 20, 10],
       opacity: 0.2,
       speedMultiplier: 1,
@@ -23,7 +19,7 @@ const neonGreenPreset = {
     },
     {
       glowPlacement: "behind",
-      colors: ["#f51159", "#ae00ff", "#f51159"],
+      colors: ["#ff5252", "#ff0000", "#ff5252"],
       glowSize: [1, 8, 1],
       opacity: 0.3,
       speedMultiplier: 1,
@@ -31,7 +27,7 @@ const neonGreenPreset = {
     },
     {
       glowPlacement: "behind",
-      colors: ["#f51159", "#ae00ff", "#f51159"],
+      colors: ["#ff5252", "#ff0000", "#ff5252"],
       glowSize: [1, 8, 1],
       opacity: 0.3,
       speedMultiplier: 1,
@@ -39,7 +35,7 @@ const neonGreenPreset = {
     },
     {
       glowPlacement: "behind",
-      colors: ["#f51159", "#ae00ff", "#f51159"],
+      colors: ["#ff5252", "#ff0000", "#ff5252"],
       glowSize: [2, 8, 2],
       opacity: 0.5,
       speedMultiplier: 1,
@@ -63,7 +59,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#222",
     paddingVertical: 14,
     paddingHorizontal: 28,
-    borderRadius: 50,
+    borderRadius: 5,
   },
   text: {
     color: "#ffffff",

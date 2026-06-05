@@ -10,13 +10,13 @@ export default function GradientBackground({ children }) {
       Animated.sequence([
         Animated.timing(anim, {
           toValue: 1,
-          duration: 8000,
+          duration: 3000,
           easing: Easing.ease,
           useNativeDriver: false,
         }),
         Animated.timing(anim, {
           toValue: 0,
-          duration: 5000,
+          duration: 2000,
           easing: Easing.ease,
           useNativeDriver: false,
         }),
@@ -31,21 +31,15 @@ export default function GradientBackground({ children }) {
     inputRange: [0, 1],
     outputRange: [-200, 0],
   });
-  const translateY = anim.interpolate({
-    inputRange: [0, 1],
-    outputRange: [-200, 0],
-  });
+
   return (
     <View style={styles.container}>
       <View style={styles.clip}>
         <Animated.View
-          style={[
-            styles.gradientWrap,
-            { transform: [{ translateX }, { translateY }] },
-          ]}
+          style={[styles.gradientWrap, { transform: [{ translateX }] }]}
         >
           <LinearGradient
-            colors={["#ff2353", "#121212", "#522020", "#ff3863"]}
+            colors={["#ff2323", "#6b0000", "#000000", "#ff3838"]}
             start={{ x: 0, y: 1 }}
             end={{ x: 1, y: 0 }}
             style={styles.gradient}
