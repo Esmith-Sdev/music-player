@@ -17,6 +17,8 @@
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
+      "permissions": ["READ_MEDIA_AUDIO"],
+
       "predictiveBackGestureEnabled": false,
       "package": "com.sdev.esmith.musicplayer"
     },
@@ -25,6 +27,13 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
+      [
+        "expo-media-library",
+        {
+          "isAccessMediaLocationEnabled": true,
+          "granularPermissions": ["audio"]
+        }
+      ],
       "expo-router",
       [
         "expo-splash-screen",
