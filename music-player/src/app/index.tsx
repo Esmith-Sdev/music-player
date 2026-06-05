@@ -1,8 +1,10 @@
 import { Text, View, StyleSheet, FlatList } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import * as MediaLibrary from "expo-media-library";
 import { useEffect, useState } from "react";
-import GradientBackground from "./GradientBackground";
-import GlowingButton from "./GlowingButton";
+import GradientBackground from "../Components/GradientBackground";
+import SongList from "../Components/SongList";
+import MiniPlayer from "../Components/MiniPlayer";
 import { COLORS } from "../Constants/theme";
 export default function Index() {
   // const [audioFiles, setAudioFiles] = useState([]);
@@ -27,36 +29,30 @@ export default function Index() {
   // useEffect(() => {
   //   getDeviceAudio().then((files) => setAudioFiles(files));
   // }, []);
-  const audioFiles = [
-    { id: "1", title: "Song 1" },
-    { id: "2", title: "Song 2" },
-    { id: "3", title: "Song 3" },
-    { id: "4", title: "Song 4" },
-  ];
+
   return (
     <>
-      <View style={styles.screen}>
-        <GradientBackground>
-          <View style={styles.content}>
-            <View style={styles.column}>
-              <FlatList
-                data={audioFiles}
-                keyExtractor={(item) => item.id}
-                renderItem={({ item }) => (
-                  <View style={styles.songContainer}>
-                    <GlowingButton title={item.title} />
-                  </View>
-                )}
-              />
+      <SafeAreaView style={{ flex: 1 }}>
+        <View style={styles.screen}>
+          <GradientBackground>
+            <View style={styles.content}>
+              <SongList />
             </View>
-          </View>
-        </GradientBackground>
-      </View>
+            <View style={styles.stickyBottom}>
+              <MiniPlayer />
+            </View>
+          </GradientBackground>
+        </View>
+      </SafeAreaView>
     </>
   );
 }
 
 const styles = StyleSheet.create({
+  stickyBottom: {
+    position: "sticky",
+    bottom: 0,
+  },
   screenBackground: {
     position: "absolute",
     top: 0,
