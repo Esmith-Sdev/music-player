@@ -1,39 +1,40 @@
-import { Text, View, StyleSheet, FlatList } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as MediaLibrary from "expo-media-library";
 import { useEffect, useState } from "react";
 import GradientBackground from "../Components/GradientBackground";
+import SecondaryNav from "../Components/SecondaryNav";
 import SongList from "../Components/SongList";
 import MiniPlayer from "../Components/MiniPlayer";
 import { COLORS } from "../Constants/theme";
+import Feather from "@expo/vector-icons/Feather";
 export default function Index() {
-  // const [audioFiles, setAudioFiles] = useState([]);
-  // async function getDeviceAudio() {
-  //   const { status } = await MediaLibrary.requestPermissionsAsync();
-
-  //   if (status !== "granted") return [];
-
-  //   const result = await MediaLibrary.getAssetsAsync({
-  //     mediaType: "audio",
-  //     first: 1000,
-  //   });
-  //   const songs = result.assets.map((asset) => ({
-  //     id: asset.id,
-  //     title: asset.filename.replace(/\.[^/.]+$/, ""),
-  //     artist: "Unknown Artist",
-  //     uri: asset.uri,
-  //     duration: asset.duration,
-  //   }));
-  //   return songs;
-  // }
-  // useEffect(() => {
-  //   getDeviceAudio().then((files) => setAudioFiles(files));
-  // }, []);
-
   return (
     <>
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#121212" }}>
         <View style={styles.screen}>
+          <View
+            style={{
+              width: "100%",
+              justifyContent: "flex-end",
+              flexDirection: "row",
+            }}
+          >
+            <TouchableOpacity>
+              <Feather
+                name="settings"
+                size={30}
+                color="red"
+                style={{ paddingRight: 15 }}
+              />
+            </TouchableOpacity>
+          </View>
           <GradientBackground>
             <View style={styles.content}>
               <SongList />
@@ -41,6 +42,7 @@ export default function Index() {
             <View style={styles.stickyBottom}>
               <MiniPlayer />
             </View>
+            <SecondaryNav />
           </GradientBackground>
         </View>
       </SafeAreaView>
@@ -51,7 +53,7 @@ export default function Index() {
 const styles = StyleSheet.create({
   stickyBottom: {
     position: "sticky",
-    bottom: 0,
+    bottom: 15,
   },
   screenBackground: {
     position: "absolute",
@@ -70,8 +72,8 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    padding: 50,
     zIndex: 1,
+    marginTop: 80,
   },
   column: {
     display: "flex",

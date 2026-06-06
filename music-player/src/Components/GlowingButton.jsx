@@ -1,5 +1,13 @@
-import { Text, Pressable, StyleSheet } from "react-native";
+import {
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  View,
+  Pressable,
+} from "react-native";
 import AnimatedGlow from "react-native-animated-glow";
+import { COLORS } from "../Constants/theme";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 const neonGreenPreset = {
   cornerRadius: 5,
@@ -44,11 +52,33 @@ const neonGreenPreset = {
   ],
 };
 
-export default function GlowingButton({ title }) {
+export default function GlowingButton({ title, artist, duration }) {
   return (
     <AnimatedGlow preset={neonGreenPreset}>
       <Pressable style={styles.button}>
-        <Text style={styles.text}>{title}</Text>
+        <View style={[styles.row, { alignItems: "center" }]}>
+          <View style={styles.column}>
+            <Text style={styles.text}>{title}</Text>
+            <Text style={styles.subText}>{artist}</Text>
+          </View>
+
+          <View
+            style={[
+              styles.row,
+              styles.center,
+              { position: "absolute", right: -15 },
+            ]}
+          >
+            <Text style={styles.subText}>{duration}</Text>
+            <TouchableOpacity>
+              <MaterialCommunityIcons
+                name="dots-vertical"
+                size={24}
+                color="white"
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
       </Pressable>
     </AnimatedGlow>
   );
@@ -61,9 +91,26 @@ const styles = StyleSheet.create({
     paddingHorizontal: 28,
     borderRadius: 5,
   },
+  column: {
+    flexDirection: "column",
+    display: "flex",
+  },
+
+  row: {
+    flexDirection: "row",
+    display: "flex",
+  },
+  flex: {
+    flex: 1,
+  },
   text: {
     color: "#ffffff",
     fontSize: 16,
     fontWeight: "600",
+  },
+  subText: {
+    color: "#ffffff",
+    fontSize: 12,
+    fontWeight: "400",
   },
 });

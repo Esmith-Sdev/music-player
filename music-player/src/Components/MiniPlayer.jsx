@@ -4,6 +4,7 @@ import {
   Text,
   Pressable,
   TouchableOpacity,
+  TouchableHighlight,
 } from "react-native";
 import Entypo from "@expo/vector-icons/Entypo";
 import { COLORS } from "../Constants/theme";
@@ -25,7 +26,9 @@ export default function MiniPlayer() {
             <Entypo name="controller-next" size={24} color="white" />
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.progressBar} />
+        <TouchableHighlight style={styles.progressBar}>
+          <View styles={styles.progressBarFill} />
+        </TouchableHighlight>
         <Text style={styles.timeText}>2:50</Text>
       </View>
     </View>
@@ -56,6 +59,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+
   controlsContainer: {
     display: "flex",
     flexDirection: "row",
