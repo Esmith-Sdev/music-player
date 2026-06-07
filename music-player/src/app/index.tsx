@@ -12,9 +12,36 @@ import GradientBackground from "../Components/GradientBackground";
 import SecondaryNav from "../Components/SecondaryNav";
 import SongList from "../Components/SongList";
 import MiniPlayer from "../Components/MiniPlayer";
+import { useAudioPlayer } from "expo-audio";
 import { COLORS } from "../Constants/theme";
 import Feather from "@expo/vector-icons/Feather";
+import ConfirmModal from "../Components/ConfirmModal";
 export default function Index() {
+  const [openConfirmModal, setOpenConfirmModal] = useState(false);
+  const [pendingDelete, setPendingDelete] = useState(null);
+  const [activeSong, setActiveSong] = useState(null);
+  const [songs, setSongs] = useState([]);
+  const audioSource = activeSong?.uri ? { uri: activeSong.uri } : null;
+  const player = useAudioPlayer(audioSource);
+  function handleRequestDelete(deleteData) {
+    setPendingDelete(deleteData);
+    setOpenConfirmModal(true);
+  }
+
+  async function handleConfirmDelete() {
+    if (pendingDelete?.onConfirm) {
+      await pendingDelete.onConfirm();
+    }
+
+    setOpenConfirmModal(false);
+    setPendingDelete(null);
+  }
+  function playNextSong() {
+    if (!songs.length || !activeSong) return;
+    const currentIndex = songs.findIndex((song) => song.id === activeSong.id);
+    const nextIndex = currentIndex === songs.length - 1 ? 0 : currentIndex + 1;
+    setActiveSong(songs[nextIndex]);
+  }
   return (
     <>
       <SafeAreaView style={{ flex: 1, backgroundColor: "#121212" }}>
@@ -37,11 +64,29 @@ export default function Index() {
           </View>
           <GradientBackground>
             <View style={styles.content}>
-              <SongList />
+              <SongList
+                onRequestDelete={handleRequestDelete}
+                setActiveSong={setActiveSong}
+                player={player}
+                setSongs={setSongs}
+              />
             </View>
             <View style={styles.stickyBottom}>
-              <MiniPlayer />
+              <MiniPlayer
+                song={activeSong}
+                player={player}
+                onNext={playNextSong}
+              />
             </View>
+            <ConfirmModal
+              visible={openConfirmModal}
+              title={`Delete "${pendingDelete?.title}"?`}
+              onConfirm={handleConfirmDelete}
+              onCancel={() => {
+                setOpenConfirmModal(false);
+                setPendingDelete(null);
+              }}
+            />
             <SecondaryNav />
           </GradientBackground>
         </View>

@@ -7,8 +7,9 @@ import {
 } from "react-native";
 import AnimatedGlow from "react-native-animated-glow";
 import { COLORS } from "../Constants/theme";
+import { useState } from "react";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-
+import SettingsDropdown from "./SettingsDropdown";
 const neonGreenPreset = {
   cornerRadius: 5,
   outlineWidth: 4,
@@ -52,13 +53,23 @@ const neonGreenPreset = {
   ],
 };
 
-export default function GlowingButton({ title, artist, duration }) {
+export default function GlowingButton({
+  title,
+  artist,
+  duration,
+  onPress,
+  onDelete,
+}) {
+  const [openSettingsDropdown, setOpenSettingsDropdown] = useState(false);
+
   return (
     <AnimatedGlow preset={neonGreenPreset}>
-      <Pressable style={styles.button}>
+      <Pressable style={styles.button} onPress={onPress}>
         <View style={[styles.row, { alignItems: "center" }]}>
           <View style={styles.column}>
-            <Text style={styles.text}>{title}</Text>
+            <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
+              {title}
+            </Text>
             <Text style={styles.subText}>{artist}</Text>
           </View>
 
@@ -70,13 +81,20 @@ export default function GlowingButton({ title, artist, duration }) {
             ]}
           >
             <Text style={styles.subText}>{duration}</Text>
-            <TouchableOpacity>
+            <TouchableOpacity
+              hitSlop={15}
+              onPress={() => setOpenSettingsDropdown((prev) => !prev)}
+            >
               <MaterialCommunityIcons
                 name="dots-vertical"
                 size={24}
                 color="white"
               />
             </TouchableOpacity>
+            <SettingsDropdown
+              visible={openSettingsDropdown}
+              onDelete={onDelete}
+            />
           </View>
         </View>
       </Pressable>
@@ -90,6 +108,8 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 28,
     borderRadius: 5,
+    borderWidth: 2,
+    borderColor: COLORS.primary,
   },
   column: {
     flexDirection: "column",
@@ -106,7 +126,8 @@ const styles = StyleSheet.create({
   text: {
     color: "#ffffff",
     fontSize: 16,
-    fontWeight: "600",
+    fontWeight: "700",
+    paddingRight: 45,
   },
   subText: {
     color: "#ffffff",

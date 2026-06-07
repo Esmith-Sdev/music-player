@@ -18,7 +18,6 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "permissions": ["READ_MEDIA_AUDIO"],
-
       "predictiveBackGestureEnabled": false,
       "package": "com.sdev.esmith.musicplayer"
     },
@@ -44,7 +43,9 @@
             "imageWidth": 76
           }
         }
-      ]
+      ],
+      "expo-audio",
+      { "enableBackgroundPlayback": true }
     ],
     "experiments": {
       "typedRoutes": true,
