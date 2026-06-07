@@ -36,12 +36,51 @@ export default function Index() {
     setOpenConfirmModal(false);
     setPendingDelete(null);
   }
+  async function playSong() {
+    if (!activeSong?.uri) return;
+
+    try {
+      player.play();
+    } catch (err) {
+      console.log("Play error:", err);
+    }
+  }
   function playNextSong() {
     if (!songs.length || !activeSong) return;
     const currentIndex = songs.findIndex((song) => song.id === activeSong.id);
     const nextIndex = currentIndex === songs.length - 1 ? 0 : currentIndex + 1;
     setActiveSong(songs[nextIndex]);
   }
+  function playPreviousSong() {
+    if (!songs.length || !activeSong) return;
+    if (player.currentTime > 3) {
+      player.seekTo(0);
+      player.play();
+      return;
+    }
+    const currentIndex = songs.findIndex((song) => song.id === activeSong.id);
+    const pastIndex = currentIndex === 0 ? songs.length - 1 : currentIndex - 1;
+    setActiveSong(songs[pastIndex]);
+  }
+  async function handleSelectSong(song) {
+    if (!song?.uri) return;
+
+    try {
+      setActiveSong(song);
+    } catch (err) {
+      console.log("Select song error:", err);
+    }
+  }
+  useEffect(() => {
+    if (!activeSong?.uri) return;
+
+    try {
+      player.seekTo(0);
+      player.play();
+    } catch (err) {
+      console.log("Play error:", err);
+    }
+  }, [activeSong]);
   return (
     <>
       <SafeAreaView style={{ flex: 1, backgroundColor: "#121212" }}>
@@ -66,8 +105,8 @@ export default function Index() {
             <View style={styles.content}>
               <SongList
                 onRequestDelete={handleRequestDelete}
-                setActiveSong={setActiveSong}
-                player={player}
+                activeSong={activeSong}
+                onSelectSong={handleSelectSong}
                 setSongs={setSongs}
               />
             </View>
@@ -76,6 +115,8 @@ export default function Index() {
                 song={activeSong}
                 player={player}
                 onNext={playNextSong}
+                onPlay={playSong}
+                onPrevious={playPreviousSong}
               />
             </View>
             <ConfirmModal

@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "dependencies": {
     "@shopify/react-native-skia": "2.2.12",
+    "@simform_solutions/react-native-audio-waveform": "^2.1.6",
     "expo": "~54.0.0",
     "expo-asset": "~12.0.13",
     "expo-audio": "~1.1.1",

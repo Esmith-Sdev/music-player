@@ -6,8 +6,8 @@ import * as MediaLibrary from "expo-media-library";
 import { useEffect, useState } from "react";
 export default function SongList({
   onRequestDelete,
-  setActiveSong,
-  player,
+  activeSong,
+  onSelectSong,
   setSongs,
 }) {
   const [audioFiles, setAudioFiles] = useState([]);
@@ -91,18 +91,12 @@ export default function SongList({
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View style={styles.songContainer}>
-            {item.id === active ? (
+            {item.id === activeSong?.id ? (
               <GlowingButton
                 title={item.title}
                 duration={item.duration}
                 artist={item.artist}
-                onPress={() => {
-                  setActive(item.id);
-                  setActiveSong(item);
-                  setTimeout(() => {
-                    player.play();
-                  }, 100);
-                }}
+                onPress={() => onSelectSong(item)}
                 onDelete={() =>
                   onRequestDelete({
                     title: item.title,
@@ -115,13 +109,7 @@ export default function SongList({
                 title={item.title}
                 duration={item.duration}
                 artist={item.artist}
-                onPress={() => {
-                  setActive(item.id);
-                  setActiveSong(item);
-                  setTimeout(() => {
-                    player.play();
-                  }, 100);
-                }}
+                onPress={() => onSelectSong(item)}
                 onDelete={() =>
                   onRequestDelete({
                     title: item.title,
