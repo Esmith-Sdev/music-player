@@ -17,7 +17,9 @@
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
-      "permissions": ["READ_MEDIA_AUDIO"],
+      "permissions": [
+        "READ_MEDIA_AUDIO"
+      ],
       "predictiveBackGestureEnabled": false,
       "package": "com.sdev.esmith.musicplayer"
     },
@@ -30,7 +32,9 @@
         "expo-media-library",
         {
           "isAccessMediaLocationEnabled": true,
-          "granularPermissions": ["audio"]
+          "granularPermissions": [
+            "audio"
+          ]
         }
       ],
       "expo-router",
@@ -49,7 +53,8 @@
         {
           "enableBackgroundPlayback": true
         }
-      ]
+      ],
+      "expo-asset"
     ],
     "experiments": {
       "typedRoutes": true,
