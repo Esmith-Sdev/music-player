@@ -2,17 +2,32 @@ import {
   StyleSheet,
   View,
   Text,
-  Pressable,
   TouchableOpacity,
   TouchableHighlight,
 } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Entypo from "@expo/vector-icons/Entypo";
-import { COLORS } from "../Constants/theme";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-export default function MiniPlayer({ song, player, onNext }) {
-  if (!song) return null;
+import { COLORS } from "../Constants/theme";
+import Waveforms from "../Components/Waveforms";
+
+export default function MiniPlayer({
+  song,
+  player,
+  onNext,
+  onPlay,
+  onPrevious,
+}) {
   const [play, setPlay] = useState(false);
+
+  useEffect(() => {
+    if (song) {
+      setPlay(true);
+    }
+  }, [song?.id]);
+
+  if (!song) return null;
+
   return (
     <View style={styles.playerContainer}>
       <View style={[styles.column, styles.center]}>
@@ -23,8 +38,8 @@ export default function MiniPlayer({ song, player, onNext }) {
           <TouchableOpacity
             style={styles.controllerIcon}
             onPress={() => {
-              player.seekTo(0);
-              player.play();
+              onPrevious();
+              setPlay(true);
             }}
           >
             <Entypo name="controller-jump-to-start" size={24} color="white" />
@@ -34,7 +49,7 @@ export default function MiniPlayer({ song, player, onNext }) {
             <TouchableOpacity
               style={styles.controllerIcon}
               onPress={() => {
-                player.play();
+                onPlay();
                 setPlay(true);
               }}
             >
@@ -48,24 +63,29 @@ export default function MiniPlayer({ song, player, onNext }) {
                 setPlay(false);
               }}
             >
-              <FontAwesome6 name="pause" size={24} color="black" />
+              <FontAwesome6 name="pause" size={24} color="white" />
             </TouchableOpacity>
           )}
 
-          <TouchableOpacity style={styles.controllerIcon} onPress={onNext}>
+          <TouchableOpacity
+            style={styles.controllerIcon}
+            onPress={() => {
+              onNext();
+              setPlay(true);
+            }}
+          >
             <Entypo name="controller-next" size={24} color="white" />
           </TouchableOpacity>
         </View>
 
-        <TouchableHighlight style={styles.progressBar}>
-          <View style={styles.progressBarFill} />
-        </TouchableHighlight>
+        <Waveforms path={song.uri} />
 
         <Text style={styles.timeText}>{song.duration}</Text>
       </View>
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   playerContainer: {
     width: "100%",
@@ -82,26 +102,22 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
   },
-  row: {
-    display: "flex",
-    flexDirection: "row",
-    gap: 15,
-  },
-
   center: {
     justifyContent: "center",
     alignItems: "center",
   },
-
   controlsContainer: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
-    paddingVertical: 20,
+
     gap: 15,
     alignItems: "center",
+    paddingVertical: 15,
   },
   controllerIcon: {
+    width: 40,
+    height: 40,
     borderColor: COLORS.primary,
     borderWidth: 2,
     borderRadius: 999,
@@ -112,7 +128,7 @@ const styles = StyleSheet.create({
   songTitle: {
     color: "#fff",
     fontSize: 25,
-    fontWeight: 700,
+    fontWeight: "700",
     textAlign: "center",
   },
   artistText: {
@@ -130,6 +146,7 @@ const styles = StyleSheet.create({
   },
   progressBarFill: {
     width: "25%",
+    height: "100%",
     backgroundColor: COLORS.primary,
   },
   timeText: {
