@@ -44,8 +44,12 @@
           }
         }
       ],
-      "expo-audio",
-      { "enableBackgroundPlayback": true }
+      [
+        "expo-audio",
+        {
+          "enableBackgroundPlayback": true
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,
