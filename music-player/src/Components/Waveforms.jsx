@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { Waveform } from "@simform_solutions/react-native-audio-waveform";
-
 export default function AudioWaveform({ path }) {
   const [waveformState, setWaveformState] = useState(null);
   const [isSeeking, setIsSeeking] = useState(false);
-
+  const [play, setPlay] = useState(false);
   return (
     <Waveform
       mode="static"
